@@ -14,7 +14,7 @@ export const getFarms = async(req, res) => {
 }
 
 export const createFarms = async(req, res) => {
-    const{username_farm, type_chicken, price_chicken, age_chicken, weight_chicken, stock_chicken, desc_farm, address_farm, pic_farm, status} = req.body;
+    const{username_farm, type_chicken, price_chicken, age_chicken, weight_chicken, stock_chicken, desc_farm, address_farm, pic_farm, longtitude, latitude, status} = req.body;
     const { id_user } = req.params;
 
     try {
@@ -46,6 +46,8 @@ export const createFarms = async(req, res) => {
             desc_farm: desc_farm,
             address_farm: address_farm,
             pic_farm: pic_farm,
+            longtitude: longtitude,
+            latitude: latitude,
             status: status
         });
         // Update isFarm to true in tb_users
@@ -61,8 +63,27 @@ export const createFarms = async(req, res) => {
     }
 }
 
+export const LoginFarms = async(req, res) => {
+    const { id_user } = req.params;
+    try {
+        // Find the farm based on id_user
+        const farm = await Farms.findOne({
+            where: {
+                id_user: id_user
+            }
+        });
+        if (farm) {
+            res.json({ id_farm: farm.id_farm, id_user: farm.id_user, message: "Login peternakan berhasil" });
+        } else {
+            res.status(404).json({ message: "Pengguna tidak memiliki peternakan yang terdaftar" });
+        }
+    } catch (error) {
+        res.status(404).json({message: "Login peternakan gagal"});
+    }
+}
+
 export const UpdateFarms = async(req, res) => {
-    const{username_farm, type_chicken, price_chicken, age_chicken, weight_chicken, stock_chicken, desc_farm, address_farm, pic_farm, status} = req.body;
+    const{username_farm, type_chicken, price_chicken, age_chicken, weight_chicken, stock_chicken, desc_farm, address_farm, pic_farm, longtitude, latitude, status} = req.body;
     const { id_farm, id_user } = req.params;
 
     try {
@@ -74,7 +95,6 @@ export const UpdateFarms = async(req, res) => {
                 id_user: id_user
             }
         });
-
         if (existingUsernameFarms) {
         return res.status(400).json({ message: "Nama peternakan telah terdaftar, tolong gunakan nama lain" });
         }
@@ -90,6 +110,8 @@ export const UpdateFarms = async(req, res) => {
             desc_farm: desc_farm,
             address_farm: address_farm,
             pic_farm: pic_farm,
+            longtitude: longtitude,
+            latitude: latitude,
             status: status
         },
         { 
