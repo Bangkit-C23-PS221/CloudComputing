@@ -1,0 +1,115 @@
+GET http://localhost:7000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOjEsIm5hbWUiOiJDaGFuZHJhIiwidXNlcm5hbWUiOiJjaGFuZHJhMTIzIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjpudWxsLCJpYXQiOjE2ODUxMTcxMDQsImV4cCI6MTY4NTExNzEzNH0.tLJvzDOsjmb9RV4wCcFUsNjNY2m_OY2Vv7VfdZNWq_4
+
+
+###
+POST http://localhost:7000/regist-users
+Content-Type: application/json
+
+{
+    "name": "Chandra",
+    "password": "12345",
+    "email": "chdr123@gmail.com",
+    "phone": "081993478653"
+}
+
+###
+POST http://localhost:7000/regist-users
+Content-Type: application/json
+
+{
+    "name": "Marinka",
+    "password": "12345",
+    "email": "mrnk123@gmail.com",
+    "phone": "081924578653"
+}
+
+
+###
+PUT http://localhost:7000/update-users/1
+Content-Type: application/json
+
+{
+    "name": "Chandra Hutapea",
+    "password": "12345",
+    "email": "chdr123@gmail.com",
+    "phone": "081993478653"
+}
+
+
+
+###
+POST http://localhost:7000/login-users
+Content-Type: application/json
+
+{
+    "email": "chdr123@gmail.com",
+    "password": "12345"
+}
+
+###
+GET http://localhost:7000/token-users
+
+###
+DELETE http://localhost:7000/logout-users
+
+
+=== FARMS ===
+###
+GET http://localhost:7000/farms
+
+
+###
+POST http://localhost:7000/users/1/createFarms
+Content-Type: application/json
+
+{
+    "username_farm": "PT Citrafarm",
+    "type_chicken": "Ayam Kampung",
+    "price_chicken": "25000",
+    "age_chicken": "20",
+    "weight_chicken": "1.3",
+    "stock_chicken": "200",
+    "desc_farm": "Peternakan kami melakukan vaksinasi ayam secara rutin tiap bulannya",
+    "address_farm": "Bandung",
+    "pic_farm": "",
+    "status": "Dalam masa panen"
+}
+
+###
+POST http://localhost:7000/users/2/createFarms
+Content-Type: application/json
+
+{
+    "username_farm": "PT Citrafarm",
+    "type_chicken": "Ayam Kampung",
+    "price_chicken": "25000",
+    "age_chicken": "20",
+    "weight_chicken": "1.3",
+    "stock_chicken": "200",
+    "desc_farm": "Peternakan kami melakukan vaksinasi ayam secara rutin tiap bulannya",
+    "address_farm": "Bandung",
+    "pic_farm": "",
+    "status": "Dalam masa panen"
+}
+
+
+###
+PUT http://localhost:7000/users/1/updateFarms/2
+Content-Type: application/json
+
+{
+    "username_farm": "PT Merauke",
+    "type_chicken": "Ayam Broiler",
+    "price_chicken": "25000",
+    "age_chicken": "20",
+    "weight_chicken": "1.3",
+    "stock_chicken": "200",
+    "desc_farm": "Peternakan kami melakukan vaksinasi ayam secara rutin tiap bulannya",
+    "address_farm": "Bandung",
+    "pic_farm": "",
+    "status": "Dalam masa panen"
+}
+
+###
+DELETE http://localhost:7000/users/2/deleteFarms/3
