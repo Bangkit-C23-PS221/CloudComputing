@@ -1,5 +1,5 @@
 GET http://localhost:7000/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOjEsIm5hbWUiOiJDaGFuZHJhIiwidXNlcm5hbWUiOiJjaGFuZHJhMTIzIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjpudWxsLCJpYXQiOjE2ODUxMTcxMDQsImV4cCI6MTY4NTExNzEzNH0.tLJvzDOsjmb9RV4wCcFUsNjNY2m_OY2Vv7VfdZNWq_4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOjEsIm5hbWUiOiJDaGFuZHJhIEh1dGFwZWEiLCJlbWFpbCI6ImNoZHIxMjNAZ21haWwuY29tIiwicGhvbmUiOiIwODE5OTM0Nzg2NTMiLCJpc0Zhcm0iOiIxIiwiaWF0IjoxNjg1MzY4ODEyLCJleHAiOjE2ODUzNjg4NzJ9.HRn95O2vwlw6O6wB9nBdoGgmGYCg78KiDTLSBhXVAxA
 
 
 ###
@@ -36,6 +36,17 @@ Content-Type: application/json
     "phone": "081993478653"
 }
 
+###
+PUT http://localhost:7000/update-users/2
+Content-Type: application/json
+
+{
+    "name": "Marinka",
+    "password": "12345",
+    "email": "mrnk1234@gmail.com",
+    "phone": "081924578653"
+}
+
 
 
 ###
@@ -58,14 +69,16 @@ DELETE http://localhost:7000/logout-users
 ###
 GET http://localhost:7000/farms
 
+###
+POST http://localhost:7000/login-farms/2
 
 ###
 POST http://localhost:7000/users/1/createFarms
 Content-Type: application/json
 
 {
-    "username_farm": "PT Citrafarm",
-    "type_chicken": "Ayam Kampung",
+    "username_farm": "PT Merauke",
+    "type_chicken": "Ayam Broiler",
     "price_chicken": "25000",
     "age_chicken": "20",
     "weight_chicken": "1.3",
@@ -95,7 +108,7 @@ Content-Type: application/json
 
 
 ###
-PUT http://localhost:7000/users/1/updateFarms/2
+PUT http://localhost:7000/farms/1/updateFarms/5
 Content-Type: application/json
 
 {
@@ -108,6 +121,27 @@ Content-Type: application/json
     "desc_farm": "Peternakan kami melakukan vaksinasi ayam secara rutin tiap bulannya",
     "address_farm": "Bandung",
     "pic_farm": "",
+    "longtitude": "",
+    "latitude": "",
+    "status": "Dalam masa panen"
+}
+
+###
+PUT http://localhost:7000/farms/2/updateFarms/6
+Content-Type: application/json
+
+{
+    "username_farm": "PT Citrafarm",
+    "type_chicken": "Ayam Kampung",
+    "price_chicken": "25000",
+    "age_chicken": "20",
+    "weight_chicken": "1.3",
+    "stock_chicken": "200",
+    "desc_farm": "Peternakan kami melakukan vaksinasi ayam secara rutin tiap bulannya",
+    "address_farm": "Bandung",
+    "pic_farm": "",
+    "longtitude": "",
+    "latitude": "",
     "status": "Dalam masa panen"
 }
 
