@@ -1,11 +1,12 @@
 import UserAyamHub from "../models/usersModels.js";
 import bcrypt from "bcrypt";
 import jsontoken from "jsonwebtoken";
+import { Op } from "sequelize";
 
 export const getUsers = async(req, res) => {
     try {
         const user = await UserAyamHub.findAll({
-            attributes: ['id_user', 'name', 'email', 'phone', 'userLevel' ]
+            attributes: ['id_user', 'name', 'email', 'phone', 'isFarm' ]
         });
         res.json(user);
     } catch (error) {
@@ -37,6 +38,7 @@ export const RegistUser = async(req, res) => {
         res.json({message: "Registrasi berhasil"});
     } catch (error) {
         console.log(error);
+        res.status(500).json({ message: "Registrasi gagal" });
     }
 }
 
@@ -60,11 +62,11 @@ export const LoginUser = async(req, res) => {
         const name = user[0].name;
         const email = user[0].email;
         const phone = user[0].phone;
-        const userLevel = user[0].userLevel;
-        const accessToken = jsontoken.sign({idUser, name, email, phone, userLevel}, process.env.ACCESS_TOKEN_SECRET, {
+        const isFarm = user[0].isFarm;
+        const accessToken = jsontoken.sign({idUser, name, email, phone, isFarm}, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: "60s"
         });
-        const tokenRefresh = jsontoken.sign({idUser, name, email, phone, userLevel}, process.env.REFRESH_TOKEN_SECRET, {
+        const tokenRefresh = jsontoken.sign({idUser, name, email, phone, isFarm}, process.env.REFRESH_TOKEN_SECRET, {
             expiresIn: "12h"
         });
         //save refresh token in database
@@ -78,10 +80,10 @@ export const LoginUser = async(req, res) => {
             httpOnly: true,
             maxAge : 24 * 60 * 60 * 1000
         });
-        //sent access token to client
-        res.json({ accessToken });
+        //sent access token & id user to client
+        res.json({ idUser, accessToken });
     } catch (error) {
-        res.status(404).json({message: "Email tidak ditemukan"});
+        res.status(404).json({message: "Login gagal"});
     }
 }
 
@@ -114,6 +116,18 @@ export const UpdateUser = async(req, res) => {
     const salt = await bcrypt.genSalt();
     const hashedPass = await bcrypt.hash(password, salt);
     try {
+        // Check if email already exists
+        const existingEmailUser = await UserAyamHub.findOne({ 
+            where: {
+                email: email,
+                id_user: { [Op.ne]: id_user }, //Keeping the email if nothing changes so that the other fields can be updated
+            }
+        });
+        if (existingEmailUser) {
+        return res.status(400).json({ message: "Email telah terdaftar, tolong gunakan email lain" });
+        }
+
+        // Update users data
         await UserAyamHub.update({
             name: name,
             password: hashedPass,
@@ -124,11 +138,9 @@ export const UpdateUser = async(req, res) => {
                 id_user: id_user
             }
         });
-        res.json({message: "Update berhasil"});
+        res.json({message: "Data pengguna berhasil diperbarui"});
     } catch (error) {
         console.log(error);
+        res.status(500).json({ message: "Data pengguna gagal diperbarui" });
     }
 }
-
-
-
