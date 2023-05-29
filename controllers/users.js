@@ -14,7 +14,7 @@ export const getUsers = async(req, res) => {
     }
 }
 
-export const RegistUser = async(req, res) => {
+export const RegistUsers = async(req, res) => {
     const{name, password, email, phone} = req.body;
     const salt =  await bcrypt.genSalt();
     const hashedPass = await bcrypt.hash(password, salt);
@@ -42,7 +42,7 @@ export const RegistUser = async(req, res) => {
     }
 }
 
-export const LoginUser = async(req, res) => {
+export const LoginUsers = async(req, res) => {
     try {
         const user = await UserAyamHub.findAll({
             where:{
@@ -87,7 +87,7 @@ export const LoginUser = async(req, res) => {
     }
 }
 
-export const LogoutUser = async(req, res) => {
+export const LogoutUsers = async(req, res) => {
     const tokenRefresh = req.cookies.tokenRefresh;
     if(!tokenRefresh) return res.sendStatus(204);
 
@@ -110,7 +110,7 @@ export const LogoutUser = async(req, res) => {
     return res.sendStatus(200);
 }
 
-export const UpdateUser = async(req, res) => {
+export const UpdateUsers = async(req, res) => {
     const { id_user } = req.params;
     const{ name, password, email, phone } = req.body;
     const salt = await bcrypt.genSalt();
@@ -144,3 +144,6 @@ export const UpdateUser = async(req, res) => {
         res.status(500).json({ message: "Data pengguna gagal diperbarui" });
     }
 }
+
+
+
