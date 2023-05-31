@@ -6,9 +6,9 @@ import cors from "cors";
 import db from "./config/database.js";
 import router from "./routes/index.js";
 
-/*import UserAyamHub from "./models/usersModels.js";*/
+/*import UserAyamHub from "./models/userModels.js";*/
 /*import Farms from "./models/farmModels.js";*/
-/*import Chicken from "./models/chickenModels.js";*/
+/*import Bookmarks from "./models/bookmarkModels.js";*/
 
 dotenv.config();
 const app = express();
@@ -19,7 +19,7 @@ try {
     //Query for create table in database
     /*await UserAyamHub.sync();*/
     /*await Farms.sync();*/
-    /*await Chicken.sync();*/
+    /*await Bookmarks.sync();*/
 } catch (error) {
     console.error(error);
 }
