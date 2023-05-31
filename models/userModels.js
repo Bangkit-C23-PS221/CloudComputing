@@ -5,24 +5,28 @@ const { DataTypes } = Sequelize;
 
 const UserAyamHub = db.define('tb_users', {
     id_user: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER(11),
         primaryKey: true,
         autoIncrement: true,
         /*field: 'id' //renamed column */
     },
     name: {
         type: DataTypes.STRING,
+        required: true,
     },
     password: {
         type: DataTypes.STRING,
+        required: true,
     },
     email: {
         type: DataTypes.STRING,
+        unique: true,
+        required: true,
     },
     phone: {
         type: DataTypes.STRING,
     },
-    isFarm: {
+    userLevel: {
         type: DataTypes.STRING,
     },
     refresh_token:{
