@@ -1,11 +1,11 @@
 import Farms from "../models/farmModels.js";
-import UserAyamHub from "../models/usersModels.js";
+import UserAyamHub from "../models/userModels.js";
 import { Op } from "sequelize";
 
-export const getFarms = async(req, res) => {
+export const getAllFarms = async(req, res) => {
     try {
         const user = await Farms.findAll({
-            attributes: ['username_farm', 'type_chicken', 'price_chicken', 'age_chicken', 'weight_chicken', 'stock_chicken', 'desc_farm', 'address_farm', 'pic_farm', 'status' ]
+            attributes: ['name_farm', 'type_chicken', 'price_chicken', 'age_chicken', 'weight_chicken', 'stock_chicken', 'desc_farm', 'address_farm', 'pic_farm', 'status' ]
         });
         res.json(user);
     } catch (error) {
@@ -14,7 +14,7 @@ export const getFarms = async(req, res) => {
 }
 
 export const createFarms = async(req, res) => {
-    const{username_farm, type_chicken, price_chicken, age_chicken, weight_chicken, stock_chicken, desc_farm, address_farm, pic_farm, longtitude, latitude, status} = req.body;
+    const{name_farm, type_chicken, price_chicken, age_chicken, weight_chicken, stock_chicken, desc_farm, address_farm, pic_farm, status} = req.body;
     const { id_user } = req.params;
 
     try {
@@ -25,9 +25,9 @@ export const createFarms = async(req, res) => {
         if (!existingUser) {
         return res.status(400).json({ message: "Pengguna tidak ditemukan" });
         }
-        // Check if username already exists
+        // Check if name already exists
         const existingUsernameFarms = await Farms.findOne({ 
-            where: { username_farm: username_farm } 
+            where: { name_farm: name_farm } 
         });
 
         if (existingUsernameFarms) {
@@ -37,7 +37,7 @@ export const createFarms = async(req, res) => {
         // Then, create a new farms
         await Farms.create({
             id_user: id_user,
-            username_farm: username_farm,
+            name_farm: name_farm,
             type_chicken: type_chicken,
             price_chicken: price_chicken,
             age_chicken: age_chicken,
@@ -46,13 +46,11 @@ export const createFarms = async(req, res) => {
             desc_farm: desc_farm,
             address_farm: address_farm,
             pic_farm: pic_farm,
-            longtitude: longtitude,
-            latitude: latitude,
             status: status
         });
-        // Update isFarm to true in tb_users
+        // Update userLevel to true in tb_users
         await UserAyamHub.update(
-            { isFarm: true },
+            { userLevel: "farm" },
             { where: { id_user: id_user } }
         );
 
@@ -83,25 +81,24 @@ export const LoginFarms = async(req, res) => {
 }
 
 export const UpdateFarms = async(req, res) => {
-    const{username_farm, type_chicken, price_chicken, age_chicken, weight_chicken, stock_chicken, desc_farm, address_farm, pic_farm, longtitude, latitude, status} = req.body;
-    const { id_farm, id_user } = req.params;
+    const{name_farm, type_chicken, price_chicken, age_chicken, weight_chicken, stock_chicken, desc_farm, address_farm, pic_farm, status} = req.body;
+    const { id_farm } = req.params;
 
     try {
-        // Check if username already exists
-        const existingUsernameFarms = await Farms.findOne({ 
+        // Check if name already exists
+        const existingNameFarms = await Farms.findOne({ 
             where: {
-                username_farm: username_farm,
-                id_farm: { [Op.ne]: id_farm }, //Keeping the username if nothing changes so that the other fields can be updated
-                id_user: id_user
+                name_farm: name_farm,
+                id_farm: { [Op.ne]: id_farm }, //Keeping the name if nothing changes so that the other fields can be updated
             }
         });
-        if (existingUsernameFarms) {
-        return res.status(400).json({ message: "Nama peternakan telah terdaftar, tolong gunakan nama lain" });
+        if (existingNameFarms) {
+            return res.status(400).json({ message: "Nama peternakan telah terdaftar, tolong gunakan nama lain" });
         }
 
         //Update farms data
         await Farms.update({
-            username_farm: username_farm,
+            name_farm: name_farm,
             type_chicken: type_chicken,
             price_chicken: price_chicken,
             age_chicken: age_chicken,
@@ -110,12 +107,10 @@ export const UpdateFarms = async(req, res) => {
             desc_farm: desc_farm,
             address_farm: address_farm,
             pic_farm: pic_farm,
-            longtitude: longtitude,
-            latitude: latitude,
             status: status
         },
         { 
-            where: { id_farm: id_farm, id_user: id_user} 
+            where: { id_farm: id_farm } 
         }
         );
         res.json({message: "Data peternakan berhasil diperbarui"});
@@ -147,6 +142,10 @@ export const deleteFarms = async(req, res) => {
                 id_user: id_user
             }
         });
+        await UserAyamHub.update(
+            { userLevel: "umkm" },
+            { where: { id_user: id_user } }
+        );
         res.json({message: "Data peternakan berhasil dihapus"});
     } catch (error) {
         console.log(error);
