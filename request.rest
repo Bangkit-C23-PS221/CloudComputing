@@ -1,6 +1,5 @@
-GET http://localhost:7000/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOjEsIm5hbWUiOiJDaGFuZHJhIEh1dGFwZWEiLCJlbWFpbCI6ImNoZHIxMjNAZ21haWwuY29tIiwicGhvbmUiOiIwODE5OTM0Nzg2NTMiLCJpc0Zhcm0iOiIxIiwiaWF0IjoxNjg1MzY4ODEyLCJleHAiOjE2ODUzNjg4NzJ9.HRn95O2vwlw6O6wB9nBdoGgmGYCg78KiDTLSBhXVAxA
-
+GET http://localhost:7000/farms
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQyMzAzOH0.bNU5VvB4b4-7U_P9NSHeqbVPvyEMQhy3gymanopCCV0
 
 ###
 POST http://localhost:7000/regist-users
@@ -18,15 +17,48 @@ POST http://localhost:7000/regist-users
 Content-Type: application/json
 
 {
+    "name": "Lily",
+    "password": "12345",
+    "email": "lily123@gmail.com",
+    "phone": "081137898653"
+}
+
+###
+POST http://localhost:7000/regist-users
+Content-Type: application/json
+
+{
     "name": "Marinka",
     "password": "12345",
     "email": "mrnk123@gmail.com",
     "phone": "081924578653"
 }
 
+###
+POST http://localhost:7000/regist-users
+Content-Type: application/json
+
+{
+    "name": "Lalisa",
+    "password": "itslisa",
+    "email": "lalisa123@gmail.com",
+    "phone": "081919825763"
+}
+
+###
+POST http://localhost:7000/regist-users
+Content-Type: application/json
+
+{
+    "name": "Tio Bramantio",
+    "password": "tio123",
+    "email": "tioo@gmail.com",
+    "phone": "081198258653"
+}
 
 ###
 PUT http://localhost:7000/update-users/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQyODQyNX0.FbEUtL_Ew-J3BwbcjlZBesITPQwjGLEBf3NEY4fXvLg
 Content-Type: application/json
 
 {
@@ -37,13 +69,14 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:7000/update-users/2
+PUT http://localhost:7000/update-users/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQyODQyNX0.FbEUtL_Ew-J3BwbcjlZBesITPQwjGLEBf3NEY4fXvLg
 Content-Type: application/json
 
 {
     "name": "Marinka",
     "password": "12345",
-    "email": "mrnk1234@gmail.com",
+    "email": "mrnk123@gmail.com",
     "phone": "081924578653"
 }
 
@@ -59,28 +92,35 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:7000/token-users
+POST http://localhost:7000/login-users
+Content-Type: application/json
+
+{
+    "email": "mrnk123@gmail.com",
+    "password": "12345"
+}
+
 
 ###
-DELETE http://localhost:7000/logout-users
-
+GET http://localhost:7000/token-users
 
 === FARMS ===
 ###
 GET http://localhost:7000/farms
 
 ###
-POST http://localhost:7000/login-farms/2
+POST http://localhost:7000/login-farms/1
 
 ###
-POST http://localhost:7000/users/1/createFarms
+POST http://localhost:7000/farms/1/createFarms
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQyODIyMH0.blGl-c15XX9l5lEUZNyBZh_ovPpzQczJk2_Q201m6aI
 Content-Type: application/json
 
 {
-    "username_farm": "PT Merauke",
+    "name_farm": "PT Merauke",
     "type_chicken": "Ayam Broiler",
     "price_chicken": "25000",
-    "age_chicken": "20",
+    "age_chicken": "2023-05-06",
     "weight_chicken": "1.3",
     "stock_chicken": "200",
     "desc_farm": "Peternakan kami melakukan vaksinasi ayam secara rutin tiap bulannya",
@@ -90,60 +130,134 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:7000/users/2/createFarms
+POST http://localhost:7000/farms/3/createFarms
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQyODIyMH0.blGl-c15XX9l5lEUZNyBZh_ovPpzQczJk2_Q201m6aI
 Content-Type: application/json
 
 {
-    "username_farm": "PT Citrafarm",
-    "type_chicken": "Ayam Kampung",
-    "price_chicken": "25000",
-    "age_chicken": "20",
-    "weight_chicken": "1.3",
-    "stock_chicken": "200",
-    "desc_farm": "Peternakan kami melakukan vaksinasi ayam secara rutin tiap bulannya",
-    "address_farm": "Bandung",
-    "pic_farm": "",
-    "status": "Dalam masa panen"
-}
-
-
-###
-PUT http://localhost:7000/farms/1/updateFarms/5
-Content-Type: application/json
-
-{
-    "username_farm": "PT Merauke",
+    "name_farm": "PT Hatori",
     "type_chicken": "Ayam Broiler",
     "price_chicken": "25000",
-    "age_chicken": "20",
+    "age_chicken": "2023-05-06",
     "weight_chicken": "1.3",
     "stock_chicken": "200",
     "desc_farm": "Peternakan kami melakukan vaksinasi ayam secara rutin tiap bulannya",
     "address_farm": "Bandung",
     "pic_farm": "",
-    "longtitude": "",
-    "latitude": "",
     "status": "Dalam masa panen"
 }
 
 ###
-PUT http://localhost:7000/farms/2/updateFarms/6
+POST http://localhost:7000/farms/2/createFarms
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQyODIyMH0.blGl-c15XX9l5lEUZNyBZh_ovPpzQczJk2_Q201m6aI
 Content-Type: application/json
 
 {
-    "username_farm": "PT Citrafarm",
+    "name_farm": "PT Citrafarm",
     "type_chicken": "Ayam Kampung",
     "price_chicken": "25000",
-    "age_chicken": "20",
+    "age_chicken": "2023-05-04",
     "weight_chicken": "1.3",
     "stock_chicken": "200",
     "desc_farm": "Peternakan kami melakukan vaksinasi ayam secara rutin tiap bulannya",
     "address_farm": "Bandung",
     "pic_farm": "",
-    "longtitude": "",
-    "latitude": "",
+    "status": "Dalam masa panen"
+}
+
+
+###
+PUT http://localhost:7000/farms/updateFarms/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQyODg3N30.XU8MjugPf6XK6EjgbDEVKSnLVI_NhCAXPwpJPCM9t00
+Content-Type: application/json
+
+{
+    "name_farm": "PT Merauke",
+    "type_chicken": "Ayam Broiler",
+    "price_chicken": "25000",
+    "age_chicken": "2023-05-04",
+    "weight_chicken": "1.3",
+    "stock_chicken": "200",
+    "desc_farm": "Peternakan kami melakukan vaksinasi ayam secara rutin tiap bulannya",
+    "address_farm": "Jl. RE. Soemantadiredja No.99, RT.03/RW.12, Pamoyanan, Kec. Bogor Sel., Kota Bogor, Jawa Barat 16136",
+    "pic_farm": "",
     "status": "Dalam masa panen"
 }
 
 ###
-DELETE http://localhost:7000/users/2/deleteFarms/3
+PUT http://localhost:7000/farms/updateFarms/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQyODg3N30.XU8MjugPf6XK6EjgbDEVKSnLVI_NhCAXPwpJPCM9t00
+Content-Type: application/json
+
+{
+    "name_farm": "PT Citrafarm",
+    "type_chicken": "Ayam Kampung",
+    "price_chicken": "25000",
+    "age_chicken": "2023-05-04",
+    "weight_chicken": "1.3",
+    "stock_chicken": "200",
+    "desc_farm": "Peternakan kami melakukan vaksinasi ayam secara rutin tiap bulannya",
+    "address_farm": "Gondorejo Krajan, Tamanharjo, Singosari, Malang Regency, East Java 65153",
+    "pic_farm": "",
+    "status": "Dalam masa panen"
+}
+
+###
+PUT http://localhost:7000/farms/updateFarms/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQyODg3N30.XU8MjugPf6XK6EjgbDEVKSnLVI_NhCAXPwpJPCM9t00
+Content-Type: application/json
+
+{
+    "name_farm": "PT Hatori",
+    "type_chicken": "Ayam Broiler",
+    "price_chicken": "25000",
+    "age_chicken": "2023-05-06",
+    "weight_chicken": "1.3",
+    "stock_chicken": "200",
+    "desc_farm": "Peternakan kami melakukan vaksinasi ayam secara rutin tiap bulannya",
+    "address_farm": "Jl. Letjen Suprapto No.31, Tj. Mas, Kec. Semarang Utara, Kota Semarang, Jawa Tengah 50137",
+    "pic_farm": "",
+    "status": "Dalam masa panen"
+}
+
+###
+DELETE http://localhost:7000/farms/1/deleteFarms/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQ2OTQxNH0.uean7lOTCZAk_72AI0qG8h6EkCuQZi4V0x65e9IAKDY
+
+
+
+=== FOR BOOKMARK ===
+###
+POST http://localhost:7000/bookmarks/3/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQ2MDAwOX0.4lcC-hxk6S7NMpBJfZrJeofv5Smtp7zTYt04MQAKoBM
+Content-Type: application/json
+
+###
+POST http://localhost:7000/bookmarks/1/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQ2MDAwOX0.4lcC-hxk6S7NMpBJfZrJeofv5Smtp7zTYt04MQAKoBM
+Content-Type: application/json
+
+###
+POST http://localhost:7000/bookmarks/5/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQ2MDAwOX0.4lcC-hxk6S7NMpBJfZrJeofv5Smtp7zTYt04MQAKoBM
+Content-Type: application/json
+
+###
+GET http://localhost:7000/bookmarks/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQ2MDAwOX0.4lcC-hxk6S7NMpBJfZrJeofv5Smtp7zTYt04MQAKoBM
+Content-Type: application/json
+
+###
+GET http://localhost:7000/bookmarks/4/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQ2MDAwOX0.4lcC-hxk6S7NMpBJfZrJeofv5Smtp7zTYt04MQAKoBM
+Content-Type: application/json
+
+###
+GET http://localhost:7000/detail-bookmarks/9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQ2MDAwOX0.4lcC-hxk6S7NMpBJfZrJeofv5Smtp7zTYt04MQAKoBM
+Content-Type: application/json
+
+###
+DELETE http://localhost:7000/delete-bookmarks/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJuYW1lIjoiQ2hhbmRyYSBIdXRhcGVhIiwiZW1haWwiOiJjaGRyMTIzQGdtYWlsLmNvbSIsInBob25lIjoiMDgxOTkzNDc4NjUzIiwidXNlckxldmVsIjoiZmFybSIsImlhdCI6MTY4NTQ2MDAwOX0.4lcC-hxk6S7NMpBJfZrJeofv5Smtp7zTYt04MQAKoBM
+Content-Type: application/json
