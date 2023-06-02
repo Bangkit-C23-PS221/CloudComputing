@@ -35,5 +35,6 @@ app.use(express.static("public"));
 app.use(router);
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => 
-          concole.log(`Listening on port http://localhost:${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Listening on port http://localhost:${PORT}`)
+);
