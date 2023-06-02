@@ -35,7 +35,5 @@ app.use(express.static("public"));
 app.use(router);
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT), () =>
-    console.log(
-        `Listening on port http://localhost:${PORT}`)
-app.listen(8080, () => console.log(' Server up & running on PORT 8080 '));
+app.listen(PORT, () => 
+          concole.log(`Listening on port http://localhost:${PORT}`));
