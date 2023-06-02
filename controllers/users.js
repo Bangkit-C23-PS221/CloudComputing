@@ -1,101 +1,64 @@
-import UserAyamHub from "../models/userModels.js";
-import bcrypt from "bcrypt";
-import jsontoken from "jsonwebtoken";
-import { Op } from "sequelize";
+import { Sequelize } from "sequelize";
+import db from "../config/database.js";
+import UserAyamHub from "./userModels.js";
 
-export const RegistUsers = async(req, res) => {
-    const{name, password, email, phone} = req.body;
-    const salt =  await bcrypt.genSalt();
-    const hashedPass = await bcrypt.hash(password, salt);
-    const umkm = "umkm";
-    try {
-        // Check if email already exists
-        const existingEmailUser = await UserAyamHub.findOne({ 
-            where: { email: email } 
-        });
-        if (existingEmailUser) {
-        return res.status(400).json({ message: "Email telah terdaftar" });
+const { DataTypes } = Sequelize;
+
+const Farms = db.define('tb_farms', {
+    id_farm: {
+        type: DataTypes.INTEGER(11),
+        primaryKey: true,
+        autoIncrement: true,
+        /*field: 'id' //renamed column */
+    },
+    id_user: {
+        type: DataTypes.INTEGER(11),
+        references: {
+            model: UserAyamHub,
+            key: 'id_user',
+            onDelete: 'NO ACTION',
+            onUpdate: 'CASCADE'
         }
+    },
+    name_farm: {
+        type: DataTypes.STRING,
+        unique: true,
+        required: true,
+    },
+    type_chicken: {
+        type: DataTypes.STRING,
+    },
+    price_chicken: {
+        type: DataTypes.STRING,
+    },
+    age_chicken: {
+        type: DataTypes.DATE,
+    },
+    weight_chicken: {
+        type: DataTypes.CHAR,
+    },
+    stock_chicken: {
+        type: DataTypes.CHAR,
+    },
+    desc_farm: {
+        type: DataTypes.STRING,
+    },
+    address_farm: {
+        type: DataTypes.STRING,
+    },
+    photo: {
+        type: DataTypes.STRING,
+    },
+    photo_url: {
+        type: DataTypes.STRING,
+    },
+    status: {
+        type: DataTypes.STRING,
+    },
+}, {
+    freezeTableName: true
+});
 
-        // If email doesn't exist, create a new entry
-        await UserAyamHub.create({
-            name: name,
-            password: hashedPass,
-            email: email,
-            phone: phone,
-            userLevel: umkm
-        });
-        res.json({message: "Registrasi berhasil"});
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Registrasi gagal" });
-    }
-}
+Farms.belongsTo(UserAyamHub, { foreignKey: 'id_user', onDelete: 'NO ACTION', onUpdate: 'CASCADE' });
 
-export const LoginUsers = async(req, res) => {
-    try {
-        const user = await UserAyamHub.findAll({
-            where:{
-                email: req.body.email
-            }
-        });
-        //Check if email exists
-        if (!user) {
-            return res.status(404).json({ message: "Email tidak ditemukan" });
-        }
-        //Check if password is correct
-        const TruePassword = await bcrypt.compare(req.body.password, user[0].password);
-        if(!TruePassword) return res.status(400).json({
-            message: "Password tidak valid"
-        });
-        const id_user = user[0].id_user;
-        const name = user[0].name;
-        const email = user[0].email;
-        const phone = user[0].phone;
-        const userLevel = user[0].userLevel;
-        const accessToken = jsontoken.sign({id_user, name, email, phone, userLevel}, process.env.ACCESS_TOKEN_SECRET);
-        //sent response to client
-        res.json({ id_user, name, email, phone, userLevel, accessToken });
-    } catch (error) {
-        res.status(404).json({message: "Login gagal"});
-    }
-}
-
-
-export const UpdateUsers = async(req, res) => {
-    const { id_user } = req.params;
-    const{ name, password, email, phone } = req.body;
-    const salt = await bcrypt.genSalt();
-    const hashedPass = await bcrypt.hash(password, salt);
-    try {
-        // Check if email already exists
-        const existingEmailUser = await UserAyamHub.findOne({ 
-            where: {
-                email: email,
-                id_user: { [Op.ne]: id_user }, //Keeping the email if nothing changes so that the other fields can be updated
-            }
-        });
-        if (existingEmailUser) {
-        return res.status(400).json({ message: "Email telah terdaftar, tolong gunakan email lain" });
-        }
-
-        // Update users data
-        await UserAyamHub.update({
-            name: name,
-            password: hashedPass,
-            email: email,
-            phone: phone,
-        }, {
-            where: {
-                id_user: id_user
-            }
-        });
-        res.json({message: "Data pengguna berhasil diperbarui"});
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Data pengguna gagal diperbarui" });
-    }
-}
-
-
-
+export default Farms;
