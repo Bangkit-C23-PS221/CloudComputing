@@ -1,23 +1,24 @@
 import express from "express";
 import {  
-    RegistUsers,  
-    LoginUsers,  
-    UpdateUsers 
+    registUsers,  
+    loginUsers,  
+    updateUsers 
 } from "../controllers/users.js";
 
 import { 
     getAllFarms,
     createFarms, 
-    UpdateFarms,
+    updateFarms,
     deleteFarms,
-    LoginFarms
+    loginFarms
 } from "../controllers/farms.js";
 
 import { 
     getAllBookmarks,
     addBookmarks,
     getFarmDetails,
-    deleteBookmarks
+    deleteBookmarks, 
+    checkBookmarkStatus
 } from "../controllers/bookmarks.js";
 
 import { verifyTokenForUsers } from "../middleware/verifyTokenForUsers.js";
@@ -25,21 +26,23 @@ import { verifyTokenForUsers } from "../middleware/verifyTokenForUsers.js";
 const router = express.Router();
 
 // Endpoints for User
-router.post('/regist-users', RegistUsers);
-router.post('/login-users', LoginUsers);
-router.put('/update-users/:id_user', verifyTokenForUsers, UpdateUsers);
+router.post('/regist-users', registUsers);
+router.post('/login-users', loginUsers);
+router.put('/update-users/:id_user', verifyTokenForUsers, updateUsers);
 
 // Endpoints for Farms
 router.get('/farms', verifyTokenForUsers, getAllFarms);
 router.post('/farms/:id_user/createFarms', verifyTokenForUsers, createFarms);
-router.post('/login-farms/:id_user', verifyTokenForUsers, LoginFarms);
-router.put('/farms/updateFarms/:id_farm', verifyTokenForUsers, UpdateFarms);
-router.delete('/farms/:id_user/deleteFarms/:id_farm', verifyTokenForUsers, deleteFarms);
+router.post('/login-farms/:id_user', verifyTokenForUsers, loginFarms);
+router.put('/updateFarms/:id_farm', verifyTokenForUsers, updateFarms);
+router.delete('/deleteFarms/:id_user/:id_farm', verifyTokenForUsers, deleteFarms);
 
 // Endpoints for bookmark
 router.get('/bookmarks/:id_user', verifyTokenForUsers, getAllBookmarks);
 router.post('/bookmarks/:id_user/:id_farm', verifyTokenForUsers, addBookmarks);
 router.get('/detail-bookmarks/:id_farm', verifyTokenForUsers, getFarmDetails);
 router.delete('/delete-bookmarks/:id_bookmark', verifyTokenForUsers, deleteBookmarks);
+router.post('/check-bookmarks/:id_user/:id_farm', verifyTokenForUsers, checkBookmarkStatus);
+
 
 export default router;
