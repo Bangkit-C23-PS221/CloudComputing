@@ -34,4 +34,8 @@ app.use(FileUpload());
 app.use(express.static("public"));
 app.use(router);
 
-app.listen(7000, () => console.log(' Server up & running on PORT 7000 '));
+const PORT = process.env.PORT || 8080;
+app.listen(PORT), () =>
+    console.log(
+        `Listening on port http://localhost:${PORT}`)
+app.listen(8080, () => console.log(' Server up & running on PORT 8080 '));
