@@ -46,8 +46,11 @@ const Farms = db.define('tb_farms', {
     address_farm: {
         type: DataTypes.STRING,
     },
-    pic_farm: {
-        type: DataTypes.BLOB,
+    photo: {
+        type: DataTypes.STRING,
+    },
+    photo_url: {
+        type: DataTypes.STRING,
     },
     status: {
         type: DataTypes.STRING,
