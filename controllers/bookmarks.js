@@ -13,7 +13,7 @@ export const getAllBookmarks = async(req, res) => {
             [
                 {
                 model: Farms,
-                attributes: ['name_farm', 'type_chicken', 'price_chicken', 'age_chicken', 'weight_chicken', 'stock_chicken', 'desc_farm', 'address_farm', 'pic_farm', 'status'],
+                attributes: ['name_farm', 'type_chicken', 'price_chicken', 'age_chicken', 'weight_chicken', 'stock_chicken', 'desc_farm', 'address_farm', 'photo_url', 'status'],
                 },
             ],
         });
@@ -104,5 +104,41 @@ export const deleteBookmarks = async(req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({message: "Bookmark gagal dihapus"})
+    }
+}
+
+export const checkBookmarkStatus = async(req, res) => { 
+    const { id_user, id_farm } = req.params;
+
+    try {
+        // Check if id_user exist in tb_users
+        const existingUser = await UserAyamHub.findOne({
+            where: { id_user: id_user}
+        });
+        if(!existingUser) {
+            return res.status(400).json({message: "Pengguna tidak ditemukan"});
+        }
+        // Check if id_farm exist in tb_farms
+        const existingFarm = await Farms.findOne({
+            where: { id_farm: id_farm}
+        });
+        if(!existingFarm) {
+            return res.status(400).json({message: "Peternakan tidak ditemukan"});
+        }
+        // Check if bookmark exists
+        const bookmark = await Bookmarks.findOne({
+            where: {
+                id_user: id_user,
+                id_farm: id_farm
+            }
+        });
+        if(bookmark) {
+            res.json({ isBookmarked: true, id_bookmark: bookmark.id_bookmark  });
+        } else {
+            res.json({ isBookmarked: false, id_bookmark: null  });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Gagal menampilkan status bookmark" });
     }
 }
