@@ -1,6 +1,6 @@
-import { Sequelize } from "sequelize";
-import db from "../config/database.js";
-import UserAyamHub from "./userModels.js";
+const { Sequelize } = require("sequelize");
+const db = require("../config/database.js");
+const UserAyamHub = require("./userModels.js");
 
 const { DataTypes } = Sequelize;
 
@@ -61,4 +61,4 @@ const Farms = db.define('tb_farms', {
 
 Farms.belongsTo(UserAyamHub, { foreignKey: 'id_user', onDelete: 'NO ACTION', onUpdate: 'CASCADE' });
 
-export default Farms;
+module.exports = Farms;
