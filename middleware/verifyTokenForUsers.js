@@ -1,7 +1,7 @@
-import jsontoken from "jsonwebtoken";
+const jsontoken = require("jsonwebtoken");
 
 //Create a vfunction to verify token
-export const verifyTokenForUsers = (req, res, next) => {
+exports.verifyTokenForUsers = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
