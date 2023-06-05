@@ -1,48 +1,47 @@
-import express from "express";
-import {  
-    registUsers,  
-    loginUsers,  
-    updateUsers 
-} from "../controllers/users.js";
+const express = require("express");
+const {
+  registUsers,
+  loginUsers,
+  updateUsers
+} = require("../controllers/users.js");
+const {
+  getMyFarm,
+  getFarmDetails,
+  getAllFarms,
+  createFarms,
+  updateFarms,
+  deleteFarms,
+  loginFarms
+} = require("../controllers/farms.js");
+const {
+  getAllBookmarks,
+  addBookmarks,
+  deleteBookmarks,
+  checkBookmarkStatus
+} = require("../controllers/bookmarks.js");
 
-import { 
-    getAllFarms,
-    createFarms, 
-    updateFarms,
-    deleteFarms,
-    loginFarms
-} from "../controllers/farms.js";
-
-import { 
-    getAllBookmarks,
-    addBookmarks,
-    getFarmDetails,
-    deleteBookmarks, 
-    checkBookmarkStatus
-} from "../controllers/bookmarks.js";
-
-import { verifyTokenForUsers } from "../middleware/verifyTokenForUsers.js";
+const { verifyTokenForUsers } = require("../middleware/verifyTokenForUsers.js");
 
 const router = express.Router();
 
 // Endpoints for User
-router.post('/regist-users', registUsers);
-router.post('/login-users', loginUsers);
-router.put('/update-users/:id_user', verifyTokenForUsers, updateUsers);
+router.post("/regist-users", registUsers);
+router.post("/login-users", loginUsers);
+router.put("/update-users/:id_user", verifyTokenForUsers, updateUsers);
 
 // Endpoints for Farms
-router.get('/farms', verifyTokenForUsers, getAllFarms);
-router.post('/farms/:id_user/createFarms', verifyTokenForUsers, createFarms);
-router.post('/login-farms/:id_user', verifyTokenForUsers, loginFarms);
-router.put('/updateFarms/:id_farm', verifyTokenForUsers, updateFarms);
-router.delete('/deleteFarms/:id_user/:id_farm', verifyTokenForUsers, deleteFarms);
+router.get("/farms/:id_user", verifyTokenForUsers, getMyFarm);
+router.get("/detail-farms/:id_farm", verifyTokenForUsers, getFarmDetails);
+router.get("/farms", verifyTokenForUsers, getAllFarms);
+router.post("/farms/:id_user/createFarms", verifyTokenForUsers, createFarms);
+router.post("/login-farms/:id_user", verifyTokenForUsers, loginFarms);
+router.put("/updateFarms/:id_user", verifyTokenForUsers, updateFarms);
+router.delete("/deleteFarms/:id_user/:id_farm", verifyTokenForUsers, deleteFarms);
 
 // Endpoints for bookmark
-router.get('/bookmarks/:id_user', verifyTokenForUsers, getAllBookmarks);
-router.post('/bookmarks/:id_user/:id_farm', verifyTokenForUsers, addBookmarks);
-router.get('/detail-bookmarks/:id_farm', verifyTokenForUsers, getFarmDetails);
-router.delete('/delete-bookmarks/:id_bookmark', verifyTokenForUsers, deleteBookmarks);
-router.post('/check-bookmarks/:id_user/:id_farm', verifyTokenForUsers, checkBookmarkStatus);
+router.get("/bookmarks/:id_user", verifyTokenForUsers, getAllBookmarks);
+router.post("/bookmarks/:id_user/:id_farm", verifyTokenForUsers, addBookmarks);
+router.delete("/delete-bookmarks/:id_user/:id_farm", verifyTokenForUsers, deleteBookmarks);
+router.post("/check-bookmarks/:id_user/:id_farm", verifyTokenForUsers, checkBookmarkStatus);
 
-
-export default router;
+module.exports = router;
