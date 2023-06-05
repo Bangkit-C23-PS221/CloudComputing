@@ -1,7 +1,7 @@
-import { Sequelize } from "sequelize";
-import db from "../config/database.js";
-import UserAyamHub from "./userModels.js";
-import Farms from "./farmModels.js";
+const { Sequelize } = require("sequelize");
+const db = require("../config/database.js");
+const UserAyamHub = require("./userModels.js");
+const Farms = require("./farmModels.js");
 
 const { DataTypes } = Sequelize;
 
@@ -33,4 +33,4 @@ const Bookmarks = db.define('tb_bookmarks', {
 Bookmarks.belongsTo(Farms, { foreignKey: 'id_farm' });
 Bookmarks.belongsTo(UserAyamHub, { foreignKey: 'id_user' });
 
-export default Bookmarks;
+module.exports = Bookmarks;
