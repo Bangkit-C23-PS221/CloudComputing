@@ -1,40 +1,44 @@
-import express from "express";
-import FileUpload from "express-fileupload";
-import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
-import bodyParser from "body-parser";
-import cors from "cors";
-import db from "./config/database.js";
-import router from "./routes/index.js";
+const express = require("express");
+const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const db = require("./config/database.js");
+const router = require("./routes/index.js");
 
-/*import UserAyamHub from "./models/userModels.js";*/
-/*import Farms from "./models/farmModels.js";*/
-/*import Bookmarks from "./models/bookmarkModels.js";*/
+/*const UserAyamHub = require("./models/userModels.js");*/
+/*const Farms = require("./models/farmModels.js");*/
+/*const Bookmarks = require("./models/bookmarkModels.js");*/
+/*const Coba = require("./models/cobaModels.js");*/
 
 dotenv.config();
 const app = express();
 
-try {
-    await db.authenticate();
-    console.log('Database Connected');
+db.authenticate()
+  .then(() => {
+    console.log("Database Connected");
     //Query for create table in database
-    /*await UserAyamHub.sync();*/
-    /*await Farms.sync();*/
-    /*await Bookmarks.sync();*/  
-} catch (error) {
+    /*UserAyamHub.sync();*/
+    /*Farms.sync();*/
+    /*Bookmarks.sync();*/
+    /*Coba.sync();*/
+  })
+  .catch((error) => {
     console.error(error);
-}
+  });
 
 //middleware
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors( {Credential: true, origin:'http://localhost:3000'}));
+app.use(bodyParser.json());
+app.use(cors( {Credential: true, origin:'http://localhost:8081'}));
 app.use(express.json());
-app.use(FileUpload());
 app.use(express.static("public"));
 app.use(router);
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () =>
-  console.log(`Listening on port http://localhost:${PORT}`)
-);
+let corsOptions = {
+  origin: "http://localhost:8081",
+};
+app.use(cors(corsOptions));
+
+app.listen(7000, () => console.log("Server up & running on PORT 7000"));
