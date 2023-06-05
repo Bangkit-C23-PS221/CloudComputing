@@ -1,9 +1,9 @@
-import UserAyamHub from "../models/userModels.js";
-import bcrypt from "bcrypt";
-import jsontoken from "jsonwebtoken";
-import { Op } from "sequelize";
+const UserAyamHub = require("../models/userModels.js");
+const bcrypt = require("bcrypt");
+const jsontoken = require("jsonwebtoken");
+const { Op } = require("sequelize");
 
-export const registUsers = async(req, res) => {
+exports.registUsers = async(req, res) => {
     const{name, password, email, phone} = req.body;
     const salt =  await bcrypt.genSalt();
     const hashedPass = await bcrypt.hash(password, salt);
@@ -32,7 +32,7 @@ export const registUsers = async(req, res) => {
     }
 }
 
-export const loginUsers = async(req, res) => {
+exports.loginUsers = async(req, res) => {
     try {
         const user = await UserAyamHub.findAll({
             where:{
@@ -61,8 +61,7 @@ export const loginUsers = async(req, res) => {
     }
 }
 
-
-export const updateUsers = async(req, res) => {
+exports.updateUsers = async(req, res) => {
     const { id_user } = req.params;
     const{ name, password, email, phone } = req.body;
     const salt = await bcrypt.genSalt();
@@ -96,6 +95,7 @@ export const updateUsers = async(req, res) => {
         res.status(500).json({ message: "Data pengguna gagal diperbarui" });
     }
 }
+
 
 
 
